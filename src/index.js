@@ -1,6 +1,6 @@
 const express = require('express')
 const { loadYamlFlags, getFlag } = require('./load-flags')
-const { applyRules } = require('./scanner-darkly/apply-rules')
+const { applyRules } = require('./apply-rules')
 
 const app = express()
 const port = 3000

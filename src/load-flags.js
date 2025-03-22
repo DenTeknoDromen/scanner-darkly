@@ -10,14 +10,19 @@ function loadYamlFlags() {
 }
 
 function getFlag(flagName, FLAGS) {
-    let index = 0
-    for (flags of FLAGS) {
-        if (flags.name === flagName) {
-            return index
+    try {
+        let index = 0
+        for (flags of FLAGS) {
+            if (flags.name === flagName) {
+                return index
+            }
+            index += 1
         }
-        index += 1
+        return 'No such flagname'        
+    } catch (error) {
+        return 'Invalid values'
     }
-    return 'No such flagname'
+
 }
 
 module.exports = {

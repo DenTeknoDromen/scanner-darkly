@@ -1,13 +1,18 @@
-const { loadYamlFlags } = require('../load-flags')
-const flags = loadYamlFlags()
+//const { loadYamlFlags } = require('../load-flags')
+//const flags = loadYamlFlags()
 
 function checkMatch(contextValue, rulesValue, mainToggleValue) {
-    const { value, toggleValue } = rulesValue
-    if (typeof value === 'object' && value.includes(contextValue)) {
-        return toggleValue
-    } else if (contextValue === value) {
-        return toggleValue
-    } else {
+    try {
+        const { value, toggleValue} = rulesValue
+
+        if (typeof value === 'object' && value.includes(contextValue)) {
+            return toggleValue
+        } else if (contextValue === value) {
+            return toggleValue
+        } else {
+            return mainToggleValue
+        }
+    } catch (error) {
         return mainToggleValue
     }
 }
@@ -35,14 +40,9 @@ function applyRules(context, flag) {
 }
 
 module.exports = {
+    checkMatch,
     applyRules,
 }
-// const testContext = {
-//     "tenant": "a",
-//     "businessunit": "a",
-//     "workStation": "b",
-//     "userType": "c",
-//     "user": "d"
-// }
+
 
 // console.log(applyRules(testContext, flags[0].rules, flags[0].mainToggleValue))
