@@ -1,0 +1,19 @@
+{
+  "name": "scanner-darkly",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.8.3",
+    "express": "^4.21.2",
+    "jest": "^29.7.0",
+    "js-yaml": "^4.1.0"
+  }
+}
