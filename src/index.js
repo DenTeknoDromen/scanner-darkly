@@ -18,8 +18,8 @@ app.post('/flags', (req, res) => {
     const { context } = req.body
     console.log("Payload recieved")
 
-    const flag = getFlag(context.flagname, FLAGS)
-    const flagOutcome = applyRules(context, flag)
+    const flagIndex = getFlag(context.flagname, FLAGS)
+    const flagOutcome = applyRules(context, FLAGS[flagIndex])
     
     res.status(200).send({flagValue: flagOutcome})
 
@@ -43,14 +43,14 @@ app.post('/flagrules', (req, res) => {
     const { name, key, value } = req.body
     console.log("Payload recieved")
 
-    FLAGS[`${name}.${key}`] = value
-    res.status(200)
+    const flagIndex = getFlag(name, FLAGS)
+    FLAGS[flagIndex][key] = value
+    res.status(200).send()
 
   } catch (error){
     res.status(500).send('server error')
   }
 })
-
 
 // Webhook??
 

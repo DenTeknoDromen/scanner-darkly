@@ -10,15 +10,15 @@ function loadYamlFlags() {
 }
 
 function getFlag(flagName, FLAGS) {
+    let index = 0
     for (flags of FLAGS) {
         if (flags.name === flagName) {
-            return flags
-        }        
+            return index
+        }
+        index += 1
     }
     return 'No such flagname'
 }
-
-// console.log(getFlag('testFlag2', loadYamlFlags()))
 
 module.exports = {
     loadYamlFlags,
