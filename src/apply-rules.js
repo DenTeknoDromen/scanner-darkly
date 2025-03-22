@@ -1,6 +1,3 @@
-//const { loadYamlFlags } = require('../load-flags')
-//const flags = loadYamlFlags()
-
 function checkMatch(contextValue, rulesValue, mainToggleValue) {
     try {
         const { value, toggleValue} = rulesValue
@@ -43,6 +40,3 @@ module.exports = {
     checkMatch,
     applyRules,
 }
-
-
-// console.log(applyRules(testContext, flags[0].rules, flags[0].mainToggleValue))

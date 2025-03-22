@@ -31,6 +31,7 @@ app.post('/flags', (req, res) => {
 // Get Flag rules
 app.get('/flagrules', (req, res) => {
   try { 
+    console.log('Retrieving flagrules')
     res.status(200).send(FLAGS)
   } catch (error){
     res.status(500).send('server error')
@@ -41,12 +42,12 @@ app.get('/flagrules', (req, res) => {
 app.post('/flagrules', (req, res) => {
   try {
     const { name, key, value } = req.body
-    console.log("Payload recieved")
 
     const flagIndex = getFlag(name, FLAGS)
     FLAGS[flagIndex][key] = value
-    res.status(200).send()
 
+    console.log("Updated flagrules")
+    res.status(200).send()
   } catch (error){
     res.status(500).send('server error')
   }

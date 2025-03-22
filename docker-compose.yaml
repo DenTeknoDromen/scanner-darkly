@@ -1,0 +1,7 @@
+services:
+  servicelevelreport:
+    container_name: scannerdarkly
+    build:
+      context: .
+    ports:
+      - "3000:3000"
