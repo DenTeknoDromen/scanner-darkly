@@ -1,28 +1,35 @@
 const axios = require('axios')
 
-const ADDRESS = 'http:/localhost/'
-const PORT = ':8080'
-const ENDPOINT = 'http:/localhost:8080/flags'
-
-const glassDarklyClient = {
-    endpoint: ENDPOINT,
-    headers: {
-        'Content-Type': 'application/json',
-        authorization: 'key'
-    },
-    getFlag: async function (flagName, context, defaultValue) {
-        axios.post(this.endpoint, context, {
-            headers: { ... this.headers, flagName: flagName }
-        })
-        .then(console.log('Context sent'))
-        .catch(function (error) {
+class scannerDarklyClient {
+    constructor(endpoint, auth) {
+        this.endpoint = `${endpoint}/flags`
+        this.headers = {
+            'Content-Type': 'application/json',
+            authorization: auth
+        }
+    }
+    async getFlag(flagName, context, defaultValue = false) {
+        try {        
+            const data = { context: {
+                flagname: flagName,
+                ...context
+            }}
+            axios.post(this.endpoint, data)
+            .then(function (response) {
+                let output = response.data.flagValue
+                output = (output === 'Disabled') ? false : output
+                output = (output === 'Enabled') ? true : output
+                console.log(output)
+                return output                
+            })
+        } catch (error) {
             console.log(error)
-            return defaultValue            
-        });
+            return defaultValue
+        }   
     }
 }
 
-
-const client = glassDarklyClient
-client.getFlag('thisisaflagname', {tenantId: 'thisIsATenant'}, 'defaultValue')
+module.exports = {
+    scannerDarklyClient
+}
 

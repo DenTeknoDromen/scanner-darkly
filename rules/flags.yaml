@@ -1,32 +1,33 @@
-  - name: testFlag
-    mainToggleValue: Disabled
-    rules:
-      tenant:
-        toggleValue: Enabled
-        value: 
-          - 'a'
-          - 'b'
-      workstation:
-        toggleValue: Disabled
-        value: 
-          - 'a'
-          - 'b'
-      usertype:
-        toggleValue: Enabled
-        value: 'b'
-  - name: testFlag2
-    mainToggleValue: Enabled
-    rules:
-      tenant:
-        toggleValue: Enabled
-        value: 
-          - 'a'
-          - 'b'
-      workstation:
-        toggleValue: Disabled
-        value: 
-          - 'a'
-          - 'b'
-      usertype:
-        toggleValue: Enabled
-        value: 'b'
+- name: testFlag
+  mainToggleValue: Enabled
+  rules:
+    tenant:
+      toggleValue: Enabled
+      value:
+        - a
+        - b
+        - c
+    workstation:
+      toggleValue: Enabled
+      value:
+        - a
+        - b
+    usertype:
+      toggleValue: Tjohej
+      value: b
+- name: testFlag2
+  mainToggleValue: Enabled
+  rules:
+    tenant:
+      toggleValue: Enabled
+      value:
+        - a
+        - b
+    workstation:
+      toggleValue: Disabled
+      value:
+        - a
+        - b
+    usertype:
+      toggleValue: Enabled
+      value: b

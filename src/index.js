@@ -1,9 +1,9 @@
 const express = require('express')
-const { loadYamlFlags, getFlag } = require('./load-flags')
+const { loadYamlFlags, updateYamlFlags } = require('./load-flags')
 const { applyRules } = require('./apply-rules')
 
 const app = express()
-const port = 3000
+const port = 4000
 
 const FLAGS = loadYamlFlags()
 app.use(express.json())
@@ -16,14 +16,15 @@ app.get('/test', (req, res) => {
 app.post('/flags', (req, res) => {
   try {
     const { context } = req.body
-    console.log("Payload recieved")
-
-    const flagIndex = getFlag(context.flagname, FLAGS)
-    const flagOutcome = applyRules(context, FLAGS[flagIndex])
     
+    const currFlag = FLAGS.find((element) => element.name === context.flagname)
+    const flagOutcome = applyRules(context, currFlag)
+
+    console.log(`Retrieving value for ${context.flagname}`)
     res.status(200).send({flagValue: flagOutcome})
 
   } catch (error){
+    console.log(error)
     res.status(500).send('server error')
   }
 })
@@ -43,8 +44,16 @@ app.post('/flagrules', (req, res) => {
   try {
     const { name, key, value } = req.body
 
-    const flagIndex = getFlag(name, FLAGS)
-    FLAGS[flagIndex][key] = value
+    const currFlag = FLAGS.find((element) => element.name === name)
+
+    if (key === 'mainToggleValue') {
+      currFlag[key] = value
+    } else {
+      const keys = key.split('.')
+      currFlag[keys[0]][keys[1]][keys[2]] = value
+    }
+    
+    updateYamlFlags(FLAGS)
 
     console.log("Updated flagrules")
     res.status(200).send()

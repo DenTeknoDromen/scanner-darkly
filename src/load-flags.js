@@ -9,23 +9,17 @@ function loadYamlFlags() {
     return yaml.load(fileContents);    
 }
 
-function getFlag(flagName, FLAGS) {
+async function updateYamlFlags(FLAGS) {
     try {
-        let index = 0
-        for (flags of FLAGS) {
-            if (flags.name === flagName) {
-                return index
-            }
-            index += 1
-        }
-        return 'No such flagname'        
+        const yamlString = yaml.dump(FLAGS)
+        fs.writeFileSync(rulesPath, yamlString)
     } catch (error) {
-        return 'Invalid values'
+        console.log('Could not write to file')
     }
 
 }
 
 module.exports = {
     loadYamlFlags,
-    getFlag
+    updateYamlFlags
 }
