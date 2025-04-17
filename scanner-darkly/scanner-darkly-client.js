@@ -1,27 +1,37 @@
 const axios = require('axios')
 
-class scannerDarklyClient {
+class ScannerDarklyClient {
     constructor(endpoint, auth) {
         this.endpoint = `${endpoint}/flags`
         this.headers = {
             'Content-Type': 'application/json',
-            authorization: auth
+            'Authorization': `Bearer ${auth}`
         }
+        this.lastValue = false
     }
+
+    get lastValue() {
+        return this._lastValue
+    }
+    set lastValue(newValue) {
+        this._lastValue = newValue
+    }
+
     async getFlag(flagName, context, defaultValue = false) {
         try {        
             const data = { context: {
                 flagname: flagName,
                 ...context
             }}
-            axios.post(this.endpoint, data)
+            const output = axios.post(this.endpoint, data, { headers: this.headers })
             .then(function (response) {
                 let output = response.data.flagValue
                 output = (output === 'Disabled') ? false : output
                 output = (output === 'Enabled') ? true : output
-                console.log(output)
-                return output                
+                return output
             })
+            this.lastValue = output
+            return output
         } catch (error) {
             console.log(error)
             return defaultValue
@@ -29,7 +39,5 @@ class scannerDarklyClient {
     }
 }
 
-module.exports = {
-    scannerDarklyClient
-}
+module.exports = ScannerDarklyClient
 
