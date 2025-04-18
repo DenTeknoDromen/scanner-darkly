@@ -14,7 +14,7 @@ function checkMatch(contextValue, rulesValue, mainToggleValue) {
     }
 }
 
-function applyRules(context, flag) {
+async function applyRules(context, flag) {
     if (flag.mainToggleValue == 'Disabled') {
         return flag.mainToggleValue
     }

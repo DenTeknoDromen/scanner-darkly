@@ -1,6 +1,7 @@
 const express = require('express')
-const { loadYamlFlags, updateYamlFlags } = require('./load-flags')
+const { loadYamlFlags } = require('./load-flags')
 const { applyRules } = require('./apply-rules')
+const { setFlags } = require('./set-flags')
 
 const app = express()
 const port = 4000
@@ -13,51 +14,44 @@ app.get('/test', (req, res) => {
 })
 
 // Returns flagvalue to client
-app.post('/flags', (req, res) => {
+app.post('/flags', async (req, res) => {
   try {
-    const { context } = req.body
+    const { body } = req
     
-    const currFlag = FLAGS.find((element) => element.name === context.flagname)
-    const flagOutcome = applyRules(context, currFlag)
+    const currFlag = body.flagname
+    const flagOutcome = await applyRules(body, FLAGS[currFlag])
 
-    console.log(`Retrieving value for ${context.flagname}`)
+    console.log(`Retrieving value for ${body.flagname}`)
     res.status(200).send({flagValue: flagOutcome})
 
   } catch (error){
-    console.log(error)
+    console.log(error.message)
     res.status(500).send('server error')
   }
 })
 
 // Get Flag rules
-app.get('/flagrules', (req, res) => {
+app.get('/flagrules', async (req, res) => {
   try { 
     console.log('Retrieving flagrules')
     res.status(200).send(FLAGS)
   } catch (error){
+    console.log(error.message)
     res.status(500).send('server error')
   }
 })
 
 // Set Flag rules
-app.post('/flagrules', (req, res) => {
+app.post('/flagrules', async (req, res) => {
   try {
-    const { name, key, value } = req.body
+    const { body } = req
 
-    const currFlag = FLAGS.find((element) => element.name === name)
-
-    if (key === 'mainToggleValue') {
-      currFlag[key] = value
-    } else {
-      const keys = key.split('.')
-      currFlag[keys[0]][keys[1]][keys[2]] = value
-    }
-    
-    updateYamlFlags(FLAGS)
+    await setFlags(FLAGS, body)
 
     console.log("Updated flagrules")
     res.status(200).send()
   } catch (error){
+    console.log(error.message)
     res.status(500).send('server error')
   }
 })

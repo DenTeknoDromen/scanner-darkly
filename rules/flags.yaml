@@ -1,4 +1,4 @@
-- name: testFlag
+testFlag:
   mainToggleValue: Enabled
   rules:
     tenant:
@@ -7,15 +7,9 @@
         - a
         - b
         - c
-    workstation:
-      toggleValue: Enabled
-      value:
-        - a
-        - b
-    usertype:
-      toggleValue: Tjohej
-      value: b
-- name: testFlag2
+        - d
+        - e
+testFlag2:
   mainToggleValue: Enabled
   rules:
     tenant:
@@ -23,11 +17,25 @@
       value:
         - a
         - b
-    workstation:
-      toggleValue: Disabled
+        - c
+        - d
+testFlag3:
+  mainToggleValue: Disabled
+  rules:
+    tenant:
+      toggleValue: Enabled
       value:
         - a
         - b
-    usertype:
+        - c
+        - d
+testFlag4:
+  mainToggleValue: Enabled
+  rules:
+    tenant:
       toggleValue: Enabled
-      value: b
+      value:
+        - a
+        - b
+        - c
+        - d
