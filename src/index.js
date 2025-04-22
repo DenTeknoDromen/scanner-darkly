@@ -16,12 +16,13 @@ app.get('/test', (req, res) => {
 // Returns flagvalue to client
 app.post('/flags', async (req, res) => {
   try {
-    const { body } = req
+    const { context } = req.body
     
-    const currFlag = body.flagname
-    const flagOutcome = await applyRules(body, FLAGS[currFlag])
+    const currFlag = context.flagname
+    const flagOutcome = await applyRules(context, FLAGS[currFlag])
+    
 
-    console.log(`Retrieving value for ${body.flagname}`)
+    console.log(`Retrieving value for ${context.flagname}`)
     res.status(200).send({flagValue: flagOutcome})
 
   } catch (error){

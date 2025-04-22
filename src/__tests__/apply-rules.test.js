@@ -74,3 +74,10 @@ test('It should return the mainToggleValue if none of the rules match', async ()
     expect(await applyRules(testContext, testFlag)).toEqual('Enabled')
     expect(await applyRules(null, testFlag)).toEqual('Enabled')
 })
+
+test('It should return the mainToggleValue if none of the rules match', async () => {
+    testFlag.mainToggleValue = 'Enabled'
+    testContext.rule3 = 'b'
+    expect(await applyRules(testContext, testFlag)).toEqual('Enabled')
+    expect(await applyRules(null, testFlag)).toEqual('Enabled')
+})

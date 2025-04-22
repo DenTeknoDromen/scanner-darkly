@@ -39,3 +39,30 @@ testFlag4:
         - b
         - c
         - d
+consonants:
+  mainToggleValue: Disabled
+  rules:
+    tenantID:
+      toggleValue: Enabled
+      value: CIR7nQwtS0rA6t0S6ejd
+    usertype:
+      toggleValue: Enabled
+      value: staff
+log-level:
+  mainToggleValue: Enabled
+  rules:
+    tenantId:
+      toggleValue: Silly
+      value: CIR7nQwtS0rA6t0S6ejd
+    usertype:
+      toggleValue: Silly
+      value: staff
+logger:
+  mainToggleValue: Enabled
+  rules:
+    tenantID:
+      toggleValue: Silly
+      value: CIR7nQwtS0rA6t0S6ejd
+    usertype:
+      toggleValue: Silly
+      value: staff

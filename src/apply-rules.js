@@ -1,7 +1,6 @@
 function checkMatch(contextValue, rulesValue, mainToggleValue) {
     try {
         const { value, toggleValue} = rulesValue
-
         if (typeof value === 'object' && value.includes(contextValue)) {
             return toggleValue
         } else if (contextValue === value) {
