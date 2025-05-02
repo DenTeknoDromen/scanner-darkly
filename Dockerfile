@@ -1,13 +1,13 @@
-FROM node:alpine
+FROM node:23-alpine
 
-ADD / app/
+COPY ./src /app/src/
 
-WORKDIR /app
+COPY ./rules /app/rules/
 
-COPY . /app/
-
-EXPOSE 4000
+WORKDIR /app/src/
 
 RUN npm install
+
+EXPOSE 4000
 
 CMD ["npm", "run", "start"]
