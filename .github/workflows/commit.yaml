@@ -3,6 +3,7 @@ on:
   push:
     branches:
     - '"master"'
+  workflow_dispatch:
 
 env:
   GKE_ZONE: europe-west3
