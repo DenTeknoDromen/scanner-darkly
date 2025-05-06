@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  GKE_ZONE: europe-west3
+  ZONE: europe-west3
   ARTIFACT_REPO: scanner-darkly-repo
   IMAGE_NAME: scanner-darkly-server
 
@@ -32,6 +32,11 @@ jobs:
     steps:
       - name: Checkout branch
         uses: actions/checkout@v4
+      - name: Authenticate agaist GCP
+        uses: google-github-actions/auth@v2
+        with:
+          service_account_key: ${{ secrets.GKE_ADMIN_KEY }}
+          project_id: ${{ secrets.PROJECT_ID }}
       - name: Setup GCLOUD CLI
         uses: google-github-actions/setup-gcloud@v2
         with: 
@@ -39,3 +44,6 @@ jobs:
           project_id: ${{ secrets.PROJECT_ID }}
       - name: Deploy image to GCP repo
         run: gcloud builds submit --tag ${{ env.GKE_ZONE }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ env.ARTIFACT_REPO }}/${{ env.IMAGE_NAME }} .
+        with: 
+          service_account_key: ${{ secrets.GKE_ADMIN_KEY }}
+          project_id: ${{ secrets.PROJECT_ID }}
