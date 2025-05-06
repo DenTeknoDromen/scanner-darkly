@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scanner-darkly-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scanner-darkly
+  template:
+    metadata:
+      labels:
+        app: scanner-darkly
+    spec:
+      containers:
+      - name: scanner-darkly-server
+        image: europe-west3-docker.pkg.dev/scanner-darkly-456311/scanner-darkly-repo/scanner-darkly-server:latest
+        ports:
+        - containerPort: 4000
+        env:
+          - name: PORT
+            value: "4000"
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+            ephemeral-storage: "1Gi"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+            ephemeral-storage: "1Gi"
